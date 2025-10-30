@@ -1,0 +1,265 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+:root {
+    --grey: #787c7e;
+    --gold: #c9b458;
+    --green: #6aaa64;
+    --light-grey: #d3d6da;
+    --dark-grey: #4b4d4f;
+    --text-present: white;
+    --text-absent: black;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+body {
+    font-family: 'Libre Franklin', Helvetica, sans-serif;
+    font-weight: 600;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto 0;
+}
+
+header {
+    max-width: 375px;
+    margin: 0 auto;
+    position: relative;
+}
+
+h1 {
+    margin-bottom: 1rem;
+}
+
+.green {
+    color: var(--green);
+    font-weight: bold;
+}
+
+.button {
+    cursor: pointer;
+    padding: 10px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: #0080ff;
+    color: white;
+    border: none;
+    z-index: 1001;
+    pointer-events: auto;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    TILES
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.tiles {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+[class*='row'] {
+    display: flex;
+    justify-content: center;
+}
+
+.tile {
+    width: 62px;
+    height: 62px;
+    border: 1px solid var(--grey);
+    padding: 1px;
+    font-size: 32px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active {
+    border: 2px solid black;
+    padding: 0;
+}
+
+.color-absent {
+    background-color: var(--grey);
+    border: 2px solid var(--grey);
+    color: var(--text-present);
+}
+
+.color-present {
+    background-color: var(--gold);
+    border: 2px solid var(--gold);
+    color: var(--text-present);
+}
+
+.color-correct {
+    background-color: var(--green);
+    border: 2px solid var(--green);
+    color: var(--text-present);
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    KEYS
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.key {
+    height: 58px;
+    min-width: 43px;
+    background-color: var(--light-grey);
+    border-radius: 4px;
+    font-size: 20px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.enter {
+    font-size: 12px;
+    padding: 0 4px;
+}
+
+.key:hover {
+    cursor: pointer;
+    opacity: 0.85;
+}
+
+.key-absent {
+    background-color: var(--grey);
+    color: white;
+}
+
+.key-present {
+    background-color: var(--gold);
+    color: white;
+}
+
+.key-correct {
+    background-color: var(--green);
+    color: white;
+}
+.key-disabled {
+    cursor: not-allowed !important;
+    opacity: 0.4 !important;
+    color: var(--grey) !important;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    NOTICE
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.notice {
+    opacity: 0;
+    transition: opacity 0.2s;
+    background-color: var(--dark-grey);
+    color: white;
+    padding: 1rem;
+    display: inline-block;
+    border-radius: 4px;
+    box-shadow: var(--light-grey) 2px 2px 3px;
+    min-width: 176px;
+    position: absolute;
+    top: 54px;
+    left: calc(50% - 105px);
+    z-index: 100;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    MODAL - notice .open already exists under NOTICE - delete that one, keep this one
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.modal-outer {
+    display: grid;
+    background: rgba(237, 237, 237, 0.7);
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    /* Hide this modal until we need it */
+    pointer-events: none;
+}
+
+.modal-inner {
+    max-width: 600px;
+    min-width: 400px;
+    padding: 2rem;
+    border-radius: 6px;
+    min-height: 200px;
+    background: white;
+    box-shadow: 1px 1px 1px lightgrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 24px;
+}
+
+.modal-outer.open .modal-inner {
+    transform: translateY(0);
+}
+
+/* needs to be at the end of the modal / notice CSS section */
+.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    ANIMATIONS
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.shake {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+.animation-bounce {
+    animation-name: bounce;
+    animation-duration: 0.4s;
+}
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    35% {
+        transform: translateY(-30px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
